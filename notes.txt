@@ -1,0 +1,28 @@
+ _____________________________________________
+|Menu                                         |
+|_____________________________________________|
+| Tree        | Gallery                     | |
+|   Folder    |    Photo1      Photo2       | |
+|             |                             | |
+|             |                             |x|
+|             |                             |x|
+|             |                             | |
+|             |                             | |
+|             |                             | |
+|_____________|_____________________________|_|
+| Status                                      |
+|_____________________________________________|
+
+Picasa.py
+----view files and classes____
+    view.py
+        PicasaView()
+            start()
+            stop()
+    menu.py
+        PicasaMenu()
+    albums.py
+        Albums()
+    gallery.py 
+        Gallery()
+
