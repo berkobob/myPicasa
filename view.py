@@ -2,7 +2,7 @@
 20/11/17: The view file in the MVC Model for My Picasa
 """
 
-from tkinter import Tk, Button, PanedWindow, VERTICAL, HORIZONTAL
+from tkinter import Tk, PanedWindow, VERTICAL, HORIZONTAL
 from menu import PicasaMenu
 from tree import Tree
 from gallery import Gallery
@@ -34,7 +34,7 @@ class PicasaView():
         self.gallery = Gallery(self.root, controller)       # create all pics
         self.LAR.add(self.gallery)
 
-        self.status = Status(self.root, controller)         # create status text
+        self.status = Status(self.TAB, controller)         # create status text
         self.TAB.add(self.status)
 
         self.TAB.config(sashrelief='raised')                # make sash visible
@@ -50,10 +50,14 @@ class PicasaView():
     def stop(self):
         """ quit Picasa and close down cleanly """
         self.root.destroy()                                 # Quit the application
-        #self.root.quit()                                   
+        #self.root.quit()
+
+    def addstatus(self, text):
+        """ add a comment to the status log """
+        self.status.text.insert((1.0), text+'\n')
 
 
-def controller(dump=None):
+def cont(dump=None):
     """ a controller just for testing """
     if dump is 'stop':
         screen.stop()
@@ -61,5 +65,5 @@ def controller(dump=None):
         print("Controlling from view.py", dump)
 
 if __name__ == '__main__':
-    screen = PicasaView(controller)
+    screen = PicasaView(cont)
     screen.start()

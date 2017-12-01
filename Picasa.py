@@ -11,7 +11,7 @@ def controller(command=None):
     elif command is 'quit':
         pass
     else:
-        print("Feature not yet implemented")
+        view.addstatus(str(command)+" not yet implemented")
 
 if __name__ == '__main__':
     view = PicasaView(controller)           # Create the main screen view

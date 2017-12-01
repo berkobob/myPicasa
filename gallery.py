@@ -6,10 +6,10 @@ from tkinter import Button, Frame
 
 class Gallery(Frame):
     """ Display a list of folders and scroll to each one when clicked """
-    def __init__(self, parent, controller):
-        self.controller = controller
+    def __init__(self, parent, cont):
+        self.controller = cont
         Frame.__init__(self, parent)
-        Button(self, text="Gallery on right", command=controller).grid()
+        Button(self, text="Gallery on right", command=cont).grid()
 
 
 def controller(text=None):

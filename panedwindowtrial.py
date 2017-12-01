@@ -28,10 +28,10 @@ frame.grid(sticky='nsew')
 frame.grid_columnconfigure(0, weight=1)
 frame.grid_rowconfigure(0, weight=1)
 
-scrollbar = tk.Scrollbar(frame)
-scrollbar.grid(row=0, column=1, sticky='ns')
+scrollbar = tk.Scrollbar(frame)#
+scrollbar.grid(row=0, column=1, sticky='ns')#
 
-bottomframe = tk.Text(frame, yscrollcommand=scrollbar.set)
+bottomframe = tk.Text(frame, yscrollcommand=scrollbar.set)#
 scrollbar.config(command=bottomframe.yview)
 
 bottomframe.grid(row=0, column=0, sticky='nsew')
@@ -40,9 +40,6 @@ TAB.add(frame)
 bottomframe.insert((1.0), "Bottom pane label1\n")
 bottomframe.insert((1.0), "Bottom pane label2\n")
 bottomframe.insert((1.0), "Bottom pane label3\n")
-
-
-
 
 TAB.config(sashwidth=2, showhandle=True, handlepad=10, sashrelief='raised')
 LAR.config(sashwidth=2, showhandle=True, handlepad=10, sashrelief='raised')

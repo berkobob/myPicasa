@@ -11,7 +11,7 @@ class PicasaMenu(Menu):
 
         self.file_menu = Menu(self)                         # create file menu
         self.file_menu.add_command(label="Watch",           # add Watch to file menu
-             command=self.controller)
+             command=lambda: self.controller('watch'))
         self.file_menu.add_separator()                      # have quit on it's own
         self.file_menu.add_command(label='Quit',            # add quit to file memu
              command=lambda: self.controller('stop'))

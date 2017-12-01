@@ -10,8 +10,8 @@
 |             |                             | |
 |             |                             | |
 |_____________|_____________________________|_|
-| Status                                      |
-|_____________________________________________|
+| Status                                    |X|
+|___________________________________________|X|
 
 Picasa.py
 ----view files and classes____
@@ -19,10 +19,14 @@ Picasa.py
         PicasaView()
             start()
             stop()
+            addstatus(string)
     menu.py
         PicasaMenu()
     albums.py
         Albums()
     gallery.py 
         Gallery()
+            addstatus(String)
+    stratus.py  
+        Status()
 
