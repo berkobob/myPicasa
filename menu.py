@@ -17,9 +17,9 @@ class PicasaMenu(Menu):
              command=lambda: self.controller('stop'))
         self.add_cascade(label="File", menu=self.file_menu) # add file menu to menu
 
-def controller():
+def controller(text=None):
     """ A controller just for testing """
-    print("Controlling from menu.py")
+    print("Controlling from menu.py", text)
 
 if __name__ == '__main__':
     from tkinter import Tk

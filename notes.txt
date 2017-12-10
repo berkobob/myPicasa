@@ -13,6 +13,9 @@
 | Status                                    |X|
 |___________________________________________|X|
 
+folder: The name of the folder
+path:   The full path of the folder
+
 Picasa.py
 ----view files and classes____
     view.py
@@ -20,6 +23,7 @@ Picasa.py
             start()
             stop()
             addstatus(string)
+            getdir()
     menu.py
         PicasaMenu()
     albums.py

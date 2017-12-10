@@ -2,7 +2,7 @@
 20/11/17: The view file in the MVC Model for My Picasa
 """
 
-from tkinter import Tk, PanedWindow, VERTICAL, HORIZONTAL
+from tkinter import Tk, PanedWindow, VERTICAL, HORIZONTAL, filedialog
 from menu import PicasaMenu
 from tree import Tree
 from gallery import Gallery
@@ -54,13 +54,27 @@ class PicasaView():
 
     def addstatus(self, text):
         """ add a comment to the status log """
-        self.status.text.insert((1.0), text+'\n')
+        txt=""
+        for msg in text:
+            txt += msg
+        self.status.text.insert((1.0), txt+'\n')
 
+    def getdir(self):
+        """ Get the user to choose a folder to watch """
+        return filedialog.askdirectory()
+
+    def buildTree(self, folders):
+        """ build tree structure from list of folders """
+        self.tree.build(folders)
 
 def cont(dump=None):
     """ a controller just for testing """
     if dump is 'stop':
         screen.stop()
+    elif dump is 'watch':
+        for a, b, c in screen.getdir():
+            print(a)
+            print(b)
     else:
         print("Controlling from view.py", dump)
 
