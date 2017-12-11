@@ -3,12 +3,19 @@
 """
 
 from os import walk
+from json import dump, load
 
 class PicasaData():
     """ Interface to the data class """
     def __init__(self, controller=None):
         self.controller = controller
         self.folders = []
+        try:
+            with open('album.json') as f:
+                self.folders = load(f)
+        except:
+            pass
+
 
     def addfolders(self, path):
         """ given a path find all folders and pictures and add to album """
@@ -26,6 +33,14 @@ class PicasaData():
 
                 self.folders.append(folder)
 
+    def save(self):
+        """ save the album to disk """
+        with open('album.json', 'w') as f:
+            dump(self.folders, f)
+
 if __name__ == '__main__':
     data = PicasaData()
+    print(data.folders)
     data.addfolders('.')
+    print(data.folders)
+    data.save()

@@ -17,7 +17,6 @@ class Tree(ttk.Treeview):
         ttk.Treeview.__init__(self, parent)
         self.heading('#0', text="Albums", anchor='w')
         self.bind('<<TreeviewSelect>>', self.onClick)
-        self.insert('', 'end', text="Test")
 
     def onClick(self, event):
         """ ? """

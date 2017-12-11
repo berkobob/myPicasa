@@ -8,6 +8,7 @@ def controller(command=None, *parms):
     """ all screen clicks are passed here to decide which function to run """
     if command is 'stop':
         print("Bye!")
+        data.save()
         view.stop()
     elif command is 'watch':
         data.addfolders(view.getdir())
@@ -20,4 +21,5 @@ def controller(command=None, *parms):
 if __name__ == '__main__':
     data = PicasaData(controller)
     view = PicasaView(controller)           # Create the main screen view
+    view.buildTree(data.folders)
     view.start()                            # Start the app
