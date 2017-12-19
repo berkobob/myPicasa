@@ -82,12 +82,17 @@ class PicasaData():
                     Width = exif['ExifImageWidth']
                 else:
                     Width = 0
+                if 'GPSInfo' in exif:
+                    GPSInfo = exif['GPSInfo']
+                else:
+                    GPSInfo = 0
 
                 image = {'Path': p,
                          'Orientation': Orientation,
                          'DateTime': DateTime,
                          'Height': Height,
-                         'Width': Width}
+                         'Width': Width,
+                         'GPSInfo': str(GPSInfo)}
                 Images.append(image)
                 print(image)
             except OSError:
