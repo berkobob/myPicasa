@@ -8,7 +8,7 @@ class OldTree(Frame):
     def __init__(self, parent, controller):
         self.controller = controller
         Frame.__init__(self, parent)
-        Button(self, text="Tree on left", command=controller).grid()
+        #Button(self, text="Tree on left", command=controller).grid()
 
 class Tree(ttk.Treeview):
     """ Display a list of folders and scroll to each one when clicked """
@@ -20,19 +20,19 @@ class Tree(ttk.Treeview):
 
     def onClick(self, event):
         """ ? """
-        ab=self.item(self.selection()[0])['text']
-        print(ab)
-        print("self.focus", self.item(self.focus()))
-        print("self.selection()[0]", self.selection()[0])
-        print("Event", event)
-        self.controller(ab) 
-    
+        ab = self.item(self.selection()[0])['text']
+        #print(ab)
+        #print("self.focus", self.item(self.focus()))
+        #print("self.selection()[0]", self.selection()[0])
+        #print("Event", event)
+        self.controller(ab)
+
     def build(self, folders):
         """ create tree structure from list of folders """
         #x=self.get_children() for item in x: self.delete(item)
-        for i in self.get_children():
-            self.delete(i)
-            
+        for k in self.get_children():
+            self.delete(k)
+
         for folder in folders:
             self.insert('', 'end', text=folder['folder'])
 

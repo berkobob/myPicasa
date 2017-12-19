@@ -43,6 +43,9 @@ class PicasaView():
         self.root.grid_columnconfigure(0, weight=1)         # make all resizeable
         self.root.grid_rowconfigure(0, weight=1)
 
+        self.TAB.sash_place(0, 1, 1000)
+        #self.TAB.sash('dragto', 0, 1, 1000)
+
     def start(self):
         """ start the main window """
         self.root.mainloop()                                # display root
@@ -54,10 +57,14 @@ class PicasaView():
 
     def addstatus(self, text):
         """ add a comment to the status log """
-        txt=""
+        txt = ""
         for msg in text:
             txt += msg
         self.status.text.insert((1.0), txt+'\n')
+
+    def clearstatus(self):
+        """ clear the contents of the status area """
+        self.status.text.delete((1.0), 'end')
 
     def getdir(self):
         """ Get the user to choose a folder to watch """
@@ -78,6 +85,7 @@ def cont(dump=None):
             print(b)
     else:
         print("Controlling from view.py", dump)
+        print(screen.TAB.sash_coord(0))
 
 if __name__ == '__main__':
     screen = PicasaView(cont)
