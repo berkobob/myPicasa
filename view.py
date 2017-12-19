@@ -63,9 +63,10 @@ class PicasaView():
         """ Get the user to choose a folder to watch """
         return filedialog.askdirectory()
 
-    def buildTree(self, folders):
-        """ build tree structure from list of folders """
+    def build(self, folders):
+        """ build tree structure and gallery from list of folders """
         self.tree.build(folders)
+        self.gallery.build(folders)
 
 def cont(dump=None):
     """ a controller just for testing """

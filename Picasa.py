@@ -12,14 +12,14 @@ def controller(command=None, *parms):
         view.stop()
     elif command is 'watch':
         data.addfolders(view.getdir())
-        view.buildTree(data.folders)
+        view.build(data.folders)
     elif command is 'status':
-        view.addstatus(parms)
+        pass #view.addstatus(parms)
     else:
         view.addstatus(str(command)+" not yet implemented")
 
 if __name__ == '__main__':
     data = PicasaData(controller)
     view = PicasaView(controller)           # Create the main screen view
-    view.buildTree(data.folders)
+    view.build(data.folders)
     view.start()                            # Start the app

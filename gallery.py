@@ -11,6 +11,11 @@ class Gallery(Frame):
         Frame.__init__(self, parent)
         Button(self, text="Gallery on right", command=cont).grid()
 
+    def build(self, folders):
+        """ display thumbnail photos """
+        for folder in folders:
+            print("Building gallery", folder)
+
 
 def controller(text=None):
     """ controller for testing purposes """

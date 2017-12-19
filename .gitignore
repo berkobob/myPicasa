@@ -1,4 +1,7 @@
-Pics/
+*.mov
+*.JPG
+*.mp4
+*.db
 *.pyc
 *.vscode
-album.json
+*.json
