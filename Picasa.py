@@ -11,8 +11,8 @@ def controller(command=None, *parms):
         data.save()
         view.stop()
     elif command is 'watch':
-        data.addfolders(view.getdir())
-        view.build(data.folders)
+        data.findfolders(view.getdir())
+        view.build(data.album)              # Build tree and gallery
     elif command is 'status':
         view.addstatus(parms)
     elif command is 'clear':
@@ -23,5 +23,5 @@ def controller(command=None, *parms):
 if __name__ == '__main__':
     view = PicasaView(controller)           # Create the main screen view
     data = PicasaData(controller)
-    view.build(data.folders)
+    view.build(data.album)
     view.start()                            # Start the app

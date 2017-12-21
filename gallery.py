@@ -2,27 +2,36 @@
 30/11/17: Display all the photos in one big long streaming canvas
 """
 
-from tkinter import Button, Frame
+from tkinter import Canvas, Label
 
-class Gallery(Frame):
+class Gallery(Canvas):
     """ Display a list of folders and scroll to each one when clicked """
     def __init__(self, parent, cont):
         self.controller = cont
-        Frame.__init__(self, parent)
-        Button(self, text="Gallery on right", command=cont).grid()
+        Canvas.__init__(self, parent)
 
-    def build(self, folders):
+    def build(self, album):
         """ display thumbnail photos """
-        for folder in folders:
-            print("Building gallery", folder)
+        for folder in album:
+            Label(self, text=folder['folder']).grid()
 
 
-def controller(text=None):
+def controller(text, *args):
     """ controller for testing purposes """
-    print("In albums: ", text)
+    txt = ""
+    for msg in args:
+        txt += msg
+    print(text, txt)
 
 if __name__ == '__main__':
     from tkinter import Tk
+    from data import PicasaData
+
     root = Tk()
-    Gallery(root, controller).grid()
+    data = PicasaData(controller)
+    view = Gallery(root, controller)
+    view.build(data.album)
+    view.grid()
+
     root.mainloop()
+    

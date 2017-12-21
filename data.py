@@ -5,53 +5,48 @@
 from os import walk, path
 from json import dump, load
 from PIL import Image, ExifTags
+from datetime import datetime
 
 class PicasaData():
     """ Interface to the data class """
     def __init__(self, controller):
         self.controller = controller
-        """
-        try:
-            with open('settings.json') as f:
-                self.settings = load(f)
-        except FileNotFoundError:
-            self.settings = dict()
-        """
+        self.stamp = datetime.now().isoformat()
+
         try:
             with open('album.json') as f:
-                self.folders = load(f)
+                self.album = load(f)
             # This should be done in a separate thread
-            for folder in self.folders:
-                if folder['top']:
-                    # rename apath to path and find a way of using path.join
-                    self.addfolders(folder['path'])
+            for folder in self.album:
+                if folder['top']:                       # There must always be one top is true
+                    self.findfolders(folder['path'])    # look for new folders
+            self.lostfolders()
         except FileNotFoundError:
-            self.folders = []
+            self.album = []                             # brand new empty album
 
 
-    def addfolders(self, top):
-        """ given a apath find all folders and pictures and add to album """
+    def findfolders(self, top):
+        """ given apath find all folders and pictures and add to album """
         for apath, __, pics in walk(top):
             apath = apath.replace('\\', '/')
 
-            if [x for x in self.folders if x['path'] == apath]:
+            f = next((fol for fol in self.album if fol['path'] == apath), False)
+            if f:
                 self.controller('status', 'Already watching: ', apath)
+                f['stamp'] = self.stamp
+                # here we need to find new photos (and ID missing?)
             else:
-                folder = apath.split('/')[apath.count('/')]
-                album = self.addpics(apath, pics)
-
                 f = {'top': top is apath,
-                     'folder': folder,
+                     'folder': apath.split('/')[apath.count('/')],
                      'path': apath,
-                     'pics': album}
+                     'pics': self.findpics(apath, pics),
+                     'stamp': self.stamp}
 
-                self.folders.append(f)
+                self.album.append(f)
                 self.controller('status', "Now watching: ", apath)
 
-                
 
-
-    def addpics(self, apath, pics):
+    def findpics(self, apath, pics):
         """ given list of pics delete check each exists and add new ones """
         Images = []
         for pic in pics:
@@ -60,51 +55,42 @@ class PicasaData():
             try:
                 img = Image.open(p)
                 try:
-                    exif = {ExifTags.TAGS[k]: v for k, v in img._getexif().items() if k in ExifTags.TAGS}
+                    exif = {ExifTags.TAGS[k]: v for k, v in img._getexif().items()
+                            if k in ExifTags.TAGS}
                 except AttributeError:
-                    self.controller('status', p, "has no meta data")
+                    #self.controller('status', p, " has no meta data")
                     w, h = img.size
                     exif = {'ExifImageHeight': h,
                             'ExifImageWidth': w}
-                if 'Orientation' in exif.keys():
-                    Orientation = exif['Orientation']
-                else:
-                    Orientation = 0
-                if 'DateTime' in exif.keys():
-                    DateTime = exif['DateTime']
-                else:
-                    DateTime = 0
-                if 'ExifImageHeight' in exif.keys():
-                    Height = exif['ExifImageHeight']
-                else:
-                    Height = 0
-                if 'ExifImageWidth'in exif.keys():
-                    Width = exif['ExifImageWidth']
-                else:
-                    Width = 0
-                if 'GPSInfo' in exif:
-                    GPSInfo = exif['GPSInfo']
-                else:
-                    GPSInfo = 0
-
-                image = {'Path': p,
-                         'Orientation': Orientation,
-                         'DateTime': DateTime,
-                         'Height': Height,
-                         'Width': Width,
-                         'GPSInfo': str(GPSInfo)}
+                image = {'path': p}
+                image['orientation'] = exif['Orientation'] if 'Orientation' in exif.keys() else 0
+                image['dateTime'] = exif['DateTime'] if 'DateTime' in exif.keys() else 0
+                image['height'] = exif['ExifImageHeight'] if 'ExifImageHeight' in exif.keys() else 0
+                image['width'] = exif['ExifImageWidth'] if 'ExifImageWidth'in exif.keys() else 0
+                #image = {'GPSInfo': exif['GPSInfo']  if 'GPSInfo' in exif else 0}
                 Images.append(image)
-                print(image)
+
             except OSError:
-                self.controller('status', apath, pic, 'is not a valid pic')
- 
+                pass #self.controller('status', apath, '/', pic, ' is not a valid pic')
 
         return Images
 
+    #def buildthumbs
+
+    def lostfolders(self):
+        """ examine each folder to check stamp was updated """
+        for folder in self.album:
+            if folder['stamp'] is not self.stamp:
+                self.controller('status', folder['folder'], ' is missing')
+
+        missing = (folder for folder in self.album if folder['stamp'] is not self.stamp)
+        for each in missing:
+            print(each['path'])
+    
     def save(self):
         """ save the album to disk """
         with open('album.json', 'w') as f:
-            dump(self.folders, f)
+            dump(self.album, f, indent=2)
 
 
 def cont(*data):
@@ -112,7 +98,8 @@ def cont(*data):
 
 if __name__ == '__main__':
     data = PicasaData(cont)
-    print(data.folders)
-    data.addfolders('Pics')
-    print(data.folders)
+    #print(data.album)
+    #data.findfolders('Pics')
+    #print(data.album)
     data.save()
+

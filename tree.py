@@ -15,7 +15,7 @@ class Tree(ttk.Treeview):
     def __init__(self, parent, controller):
         self.controller = controller
         ttk.Treeview.__init__(self, parent)
-        self.heading('#0', text="Albums", anchor='w')
+        self.heading('#0', text="FOLDERS", anchor='w')
         self.bind('<<TreeviewSelect>>', self.onClick)
 
     def onClick(self, event):

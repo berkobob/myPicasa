@@ -2,7 +2,7 @@
 |Menu                                         |
 |_____________________________________________|
 | Tree        | Gallery                     | |
-|   Folder    |    Photo1      Photo2       | |
+|   Folder    |    Image1      Image2       | |
 |             |                             | |
 |             |                             |x|
 |             |                             |x|
@@ -13,8 +13,22 @@
 | Status                                    |X|
 |___________________________________________|X|
 
+Data Structure:
+Album
+    Folder
+        Pics
+
+top: Is this a folder marked to watch
 folder: The name of the folder
 path:   The full path of the folder
+pics: List of paths and pic info
+            path
+            Orientation
+            DateTime
+            height 
+            width
+            [gpsinfo]
+
 
 Picasa.py
 ----view files and classes____
@@ -35,3 +49,16 @@ Picasa.py
         Status()
 
 {'GPSInfo': {1: 'N', 2: ((40, 1), (42, 1), (5047, 100)), 3: 'W', 4: ((74, 1), (0, 1), (5540, 100)), 7: ((23, 1), (25, 1), (4788, 100)), 12: 'K', 13: (0, 1), 16: 'T', 17: (43193, 248), 23: 'T', 24: (43193, 248), 29: '2017:08:29', 31: (3862, 629)}, 'ResolutionUnit': 2, 'ExifOffset': 210, 'Make': 'Apple', 'Model': 'iPhone 7 Plus', 'Software': '10.3.3', 'Orientation': 6, 'DateTime': '2017:08:29 19:25:48', 'YCbCrPositioning': 1, 'XResolution': (72, 1), 'YResolution': (72, 1), 'ExifVersion': b'0221', 'ComponentsConfiguration': b'\x01\x02\x03\x00', 'ShutterSpeedValue': (1805, 462), 'DateTimeOriginal': '2017:08:29 19:25:48', 'DateTimeDigitized': '2017:08:29 19:25:48', 'ApertureValue': (2159, 1273), 'BrightnessValue': (5345, 4136), 'ExposureBiasValue': (0, 1), 'MeteringMode': 5, 'Flash': 24, 'FocalLength': (399, 100), 'ColorSpace': 65535, 'ExifImageWidth': 4032, 'FocalLengthIn35mmFilm': 28, 'SceneCaptureType': 0, 'ExifImageHeight': 3024, 'SubsecTimeOriginal': '509', 'SubsecTimeDigitized': '509', 'SubjectLocation': (894, 1139, 427, 429), 'SensingMethod': 2, 'ExposureTime': (1, 15), 'FNumber': (9, 5), 'SceneType': b'\x01', 'ExposureProgram': 2, 'ISOSpeedRatings': 100, 'ExposureMode': 0, 'FlashPixVersion': b'0100', 'WhiteBalance': 0, 'LensSpecification': ((399, 100), (33, 5), (9, 5), (14, 5)), 
+
+    #print(data.album[8])
+    #a = next((item for item in data.album if item.get('path') == 'Pics/Temp'), False)
+    #a['folder'] = 123
+    #print(a)
+    #print(data.album[8])
+
+    b = (item for item in data.album if item.get('path') == 'Pics/Temp')
+    b = next(b)
+    print(b)
+    print (b['folder'])
+
+    
